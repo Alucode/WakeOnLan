@@ -46,7 +46,7 @@ namespace WakeOnLan
             Console.WriteLine("MAC Address:    {0}", MacAddressToString(macAddressBytes));
             Console.WriteLine("Remote Address: {0}", remoteAddress);
             Console.WriteLine("Remote Port:    {0}", remotePort);
-			Console.WriteLine();
+            Console.WriteLine();
 
             // 6-bytes trailer + 16 * 6-byte MAC address
             byte[] magicPacket = new byte[17 * 6];
@@ -62,7 +62,7 @@ namespace WakeOnLan
 
             try
             {
-                using (UdpClient udp = new UdpClient(remoteAddress, remotePort))
+                using (var udp = new UdpClient(remoteAddress, remotePort))
                 {
                     udp.Send(magicPacket, magicPacket.Length);
                 }
@@ -71,10 +71,10 @@ namespace WakeOnLan
             {
                 Console.ForegroundColor = ConsoleColor.Red;
                 Console.WriteLine(ex.Message);
-                if (ex.InnerException != null) Console.WriteLine(ex.InnerException.Message);                
+                if (ex.InnerException != null) Console.WriteLine(ex.InnerException.Message);
                 Console.WriteLine();
                 Console.ResetColor();
-            }            
+            }
         }
 
         private static byte[] GetMacAddressBytes(string macAddress)
